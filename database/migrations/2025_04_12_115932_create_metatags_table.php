@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('metatags', function (Blueprint $table) {
             $table->id();
-            $table->string('metatagable_type');
-            $table->integer('metatagable_id');
+            $table->morphs('metatagable');
             $table->string('meta_h1');
             $table->string('meta_title');
             $table->string('meta_description');
