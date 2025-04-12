@@ -14,6 +14,10 @@ class MetatagResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'meta_h1' => $this->meta_h1,
+            'meta_title' => $this->meta_title,
+            'meta_description' => $this->meta_description,
+        ];
     }
 }
