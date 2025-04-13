@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('brand_id')->index()->constrained('brands');
             $table->string('article')->unique()->index();
             $table->string('title');
-            $table->string('description');
+            $table->text('description');
             $table->string('price');
             $table->string('delivery')->nullable();
             $table->integer('quantity');
