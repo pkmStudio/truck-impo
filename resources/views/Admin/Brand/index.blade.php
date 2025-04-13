@@ -10,7 +10,7 @@
             <thead class="thead-dark">
             <tr>
                 <th>ID</th>
-                <th>Заголовок</th>
+                <th>Название</th>
                 <th>Описание</th>
                 <th>Действия</th>
             </tr>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Brand\StoreRequest;
+use App\Http\Requests\Admin\Brand\UpdateRequest;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 
@@ -35,17 +36,18 @@ class BrandController extends Controller
 
     public function edit(Brand $brand)
     {
-
+        return view('admin.brand.edit', ['brand' => $brand]);
     }
 
     public function update(Brand $brand, UpdateRequest $request)
     {
-
+        $data = $request->validated();
+        $brand->update($data);
+        return redirect()->route('admin.brands.index');
     }
 
     public function destroy(Brand $brand)
     {
-        $brand->products()->delete();
         $brand->delete();
         return redirect()->route('admin.brands.index');
     }

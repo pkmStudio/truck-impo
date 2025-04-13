@@ -10,7 +10,7 @@ Route::get('/admin', function () {
 })->name('admin.index');
 
 Route::group(['prefix' => 'admin'], function () {
-    Route::resource('/brands', BrandController::class)->names('admin.brands');
+    Route::resource('/brands', BrandController::class)->names('admin.brands')->except('show');
     Route::resource('/categories', CategoryController::class)->names('admin.categories');
     Route::resource('/products', ProductController::class)->names('admin.products');
 });
