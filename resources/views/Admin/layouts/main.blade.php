@@ -127,7 +127,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="index3.html" class="brand-link">
+        <a href="{{ route('admin.index') }}" class="brand-link">
             <span class="brand-text font-weight-light">Truck Import</span>
         </a>
 
@@ -141,7 +141,7 @@
                          with font-awesome or any other icon font library -->
                     <li class="nav-header">Управление магазином</li>
                     <li class="nav-item">
-                        <a href="" class="nav-link">
+                        <a href="{{ route('admin.brands.index') }}" class="nav-link">
                             <i class="nav-icon fab fa-bandcamp"></i>
                             <p>
                                 Бренды
@@ -149,7 +149,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="" class="nav-link">
+                        <a href="{{ route('admin.categories.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-truck"></i>
                             <p>
                                 Категории
@@ -157,7 +157,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="" class="nav-link">
+                        <a href="{{ route('admin.products.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-boxes"></i>
                             <p>
                                 Товары
