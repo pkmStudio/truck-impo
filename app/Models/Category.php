@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Container\Attributes\Tag;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Support\Facades\Storage;
 
 class Category extends Model
 {
@@ -31,6 +32,11 @@ class Category extends Model
 
     public function metatags(): MorphOne
     {
-        return $this->morphOne(Tag::class, 'metatagable');
+        return $this->morphOne(Metatag::class, 'metatagable');
+    }
+
+    public function getImageUrlAttribute(): string
+    {
+        return $this->image_path ?? Storage::disk('public')->url($this->image_path);
     }
 }

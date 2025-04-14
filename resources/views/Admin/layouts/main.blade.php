@@ -203,6 +203,12 @@
 <script src=" {{ asset('AdminLTE/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src=" {{ asset('AdminLTE/dist/js/adminlte.js') }}"></script>
-
+<!-- bs-custom-file-input -->
+<script src="{{ asset('AdminLTE/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+<script>
+    $(function () {
+        bsCustomFileInput.init();
+    });
+</script>
 </body>
 </html>

@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="container mt-4">
-        <a href="{{ route('admin.brands.create') }}" class="btn btn-primary mb-3">
-            <i class="fas fa-plus"></i> Добавить бренд
+        <a href="{{ route('admin.categories.create') }}" class="btn btn-primary mb-3">
+            <i class="fas fa-plus"></i> Добавить Категорию
         </a>
 
         <table class="table table-bordered">
@@ -16,18 +16,18 @@
             </tr>
             </thead>
             <tbody>
-            @foreach ($brands as $brand)
+            @foreach ($categories as $category)
                 <tr>
-                    <td>{{ $brand->id }}</td>
-                    <td>{{ $brand->title }}</td>
-                    <td>{{ $brand->description }}</td>
+                    <td>{{ $category->id }}</td>
+                    <td>{{ $category->title }}</td>
+                    <td>{{ $category->description }}</td>
                     <td>
-                        <a href="{{ route('admin.brands.edit', $brand->id) }}" class="btn btn-warning btn-sm">
+                        <a href="{{ route('admin.categories.edit', $category->id) }}" class="btn btn-warning btn-sm">
                             <i class="fas fa-edit"></i>
                         </a>
 
                         <!-- Кнопка удаления с модальным окном -->
-                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" data-action="{{ route('admin.brands.destroy', $brand->id) }}" onclick="setDeleteAction(this)">
+                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" data-action="{{ route('admin.categories.destroy', $category->id) }}" onclick="setDeleteAction(this)">
                             <i class="fas fa-trash"></i>
                         </button>
                     </td>
@@ -46,14 +46,14 @@
 
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Удаление бренда</h5>
+                        <h5 class="modal-title">Удаление категории</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>Вы точно хотите удалить этот бренд?</p>
-                        <p>Это также удалит все товары этого бренда.</p>
+                        <p>Вы точно хотите удалить эту категорию?</p>
+                        <p>Это может также удалить все товары этой категории.</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
