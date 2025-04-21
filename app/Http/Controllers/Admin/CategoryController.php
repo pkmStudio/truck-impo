@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Category\StoreRequest;
 use App\Http\Requests\Admin\Category\UpdateRequest;
-use App\Http\Resources\Category\CategoryResource;
 use App\Models\Category;
 use App\Services\Admin\CategoryService;
 use Illuminate\Contracts\View\View;
