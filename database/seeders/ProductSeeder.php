@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Brand;
-use App\Models\Category;
+use App\Models\Catalog;
 use App\Models\Product;
 use Illuminate\Database\Seeder;
 
@@ -16,19 +16,9 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        $categories = Category::all()->whereNotNull('parent_id');
+        $brands = Brand::all();
+        $catalogs = Catalog::all();
 
-        Product::factory()->count(40)->create([
-            'brand_id' => fn() => Brand::all()->random()->id,
-        ]);
-
-        $products = Product::all();
-
-        foreach ($products as $product) {
-            $categoryIds = $categories->random(rand(1, 5))->pluck('id');
-            $product->categories()->syncWithoutDetaching($categoryIds);
-        }
-
-
+        Product::factory()->count(40)->create();
     }
 }

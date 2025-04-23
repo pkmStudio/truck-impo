@@ -23,9 +23,9 @@ class Product extends Model
         return $this->hasMany(Characteristic::class);
     }
 
-    public function categories(): BelongsToMany
+    public function catalog(): BelongsTo
     {
-        return $this->belongsToMany(Category::class, 'category_product');
+        return $this->belongsTo(Catalog::class);
     }
 
     public function metatags(): MorphOne

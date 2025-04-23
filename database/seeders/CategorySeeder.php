@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Catalog;
 use App\Models\Category;
 use Illuminate\Database\Seeder;
 
@@ -16,7 +17,14 @@ class CategorySeeder extends Seeder
     {
         Category::factory()->count(5)->create(['parent_id' => null]);
         Category::factory()->count(20)->create([
-            'parent_id' => fn() => Category::whereNull('parent_id')->inRandomOrder()->first()->id,
+            'parent_id' => fn() => Category::all()->whereNull('parent_id')->random()->id,
         ]);
+
+        $catalogsIds = Catalog::all()->pluck('id');
+        $categories = Category::all()->whereNotNull('parent_id');
+
+        foreach($categories as $category) {
+            $category->catalogs()->syncWithoutDetaching($catalogsIds);
+        }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Manufacturer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,12 @@ class CatalogFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'manufacturer_id' => Manufacturer::all()->random()->id,
+            'title' => fake()->unique()->word(),
+            'description' => fake()->text,
+            'content' => fake()->randomHtml(2,5),
+            'image_path' => fake()->imageUrl,
+            'slug' => fake()->slug,
         ];
     }
 }
