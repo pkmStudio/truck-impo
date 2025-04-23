@@ -10,6 +10,7 @@
         </div>
         @php session()->forget('success'); @endphp
     @endif
+
     <div class="container mt-4">
         <div class="card shadow-sm">
             <div class="card-header bg-primary text-white">
@@ -38,21 +39,31 @@
                             @endforeach
                         </select>
                     </div>
+
+                    <div class="form-group">
+                        <label for="category-type">Тип категории <small class="text-muted">(обязательно)</small></label>
+                        <select class="form-control" id="category-type" name="category[type]" required>
+                            <option value="manufacturer">Марка (BMW, Mercedes)</option>
+                            <option value="model">Модель трака (X5, G-Class)</option>
+                            <option value="part">Запчасти (Тормоза, Диски)</option>
+                        </select>
+                    </div>
+
                     <div class="form-group">
                         <label for="category-image">Изображение<small class="text-muted">(необязательно)</small></label>
                         <div class="input-group">
                             <div class="custom-file">
                                 <input type="file" class="form-control" id="category-image" name="category[image]">
-                                <label class="custom-file-label" for="category-image" >Выберите изображение</label>
+                                <label class="custom-file-label" for="category-image">Выберите изображение</label>
                             </div>
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label for="category-description">Описание <small class="text-muted">(необязательно)</small></label>
                         <textarea class="form-control" id="category-description" name="category[description]" rows="3">{{ old('category.description') }}</textarea>
                     </div>
 
-                    <!-- Поле "Контент" на всю ширину -->
                     <div class="form-group mt-3">
                         <label for="category-content">Контент <small class="text-muted">(необязательно)</small></label>
                         <textarea class="form-control" id="category-content" name="category[content]" rows="6">{{ old('category.content') }}</textarea>

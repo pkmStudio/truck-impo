@@ -25,11 +25,6 @@ class Category extends Model
         return $this->hasMany(Category::class, 'parent_id');
     }
 
-    public function catalogs(): BelongsToMany
-    {
-        return $this->belongsToMany(Catalog::class);
-    }
-
     public function metatags(): MorphOne
     {
         return $this->morphOne(Metatag::class, 'metatagable');

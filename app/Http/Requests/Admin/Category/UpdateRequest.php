@@ -5,6 +5,7 @@ namespace App\Http\Requests\Admin\Category;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
@@ -17,8 +18,19 @@ class UpdateRequest extends FormRequest
     {
         return [
             'category.title' => 'required|string|min:3|max:255|unique:categories,title,' . $this->route('category')->id,
-            'category.slug' => 'required|string|min:3|max:255|unique:categories,slug,' . $this->route('category')->id,
+            'category.slug' => [
+                'required',
+                'string',
+                'min:3',
+                'max:255',
+                Rule::unique('categories')->where(fn($query) => $query->where('parent_id', $this->input('category.parent_id')))
+                    ->ignore($this->route('category')->id),
+            ],
             'category.parent_id' => 'nullable|integer|exists:categories,id',
+            'category.type' => [
+                'required',
+                Rule::in(['manufacturer', 'model', 'part']),
+            ],
             'category.description' => 'nullable|string',
             'category.content' => 'nullable|string',
             'category.image' => 'nullable|image|mimes:jpg,jpeg,png,gif,svg,webp',

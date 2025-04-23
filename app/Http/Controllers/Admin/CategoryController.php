@@ -21,7 +21,7 @@ class CategoryController extends Controller
 
     public function create(): View
     {
-        $categories = Category::all()->sortBy('title');
+        $categories = Category::all()->sortBy('parent_id');
         return view('admin.category.create', ['categories' => $categories]);
     }
 

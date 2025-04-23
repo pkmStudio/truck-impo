@@ -16,9 +16,6 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        $brands = Brand::all();
-        $catalogs = Catalog::all();
-
         Product::factory()->count(40)->create();
     }
 }

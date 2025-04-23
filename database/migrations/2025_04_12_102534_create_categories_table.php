@@ -14,12 +14,16 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('parent_id')->nullable()->index()->constrained('categories')->onDelete('cascade');
-            $table->string('title')->unique();
+            $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->text('content')->nullable();
             $table->string('image_path')->nullable();
-            $table->string('slug')->unique()->index();
+            $table->string('slug')->index();
+            $table->enum('type', ['manufacturer', 'model', 'part'])->index()->nullable();
             $table->timestamps();
+
+            // Уникальность slug в рамках parent_id
+            $table->unique(['parent_id', 'slug']);
         });
     }
 

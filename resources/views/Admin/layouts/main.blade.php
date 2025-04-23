@@ -14,6 +14,8 @@
     <link rel="stylesheet" href=" {{ asset('AdminLTE/dist/css/adminlte.min.css') }}">
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href=" {{ asset('AdminLTE/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/select2/css/select2.min.css') }}">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -205,9 +207,14 @@
 <script src=" {{ asset('AdminLTE/dist/js/adminlte.js') }}"></script>
 <!-- bs-custom-file-input -->
 <script src="{{ asset('AdminLTE/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+<!-- Select2 -->
+<script src="{{ asset('AdminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
 <script>
     $(function () {
         bsCustomFileInput.init();
+
+        //Initialize Select2 Elements
+        // $('.categories_multiple').select2()
     });
 </script>
 </body>

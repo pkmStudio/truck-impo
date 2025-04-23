@@ -15,16 +15,15 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        Category::factory()->count(5)->create(['parent_id' => null]);
+        Category::factory()->count(5)->create(['parent_id' => null, 'type' => 'manufacturer']);
         Category::factory()->count(20)->create([
             'parent_id' => fn() => Category::all()->whereNull('parent_id')->random()->id,
+            'type' => 'model'
+        ]);
+        Category::factory()->count(20)->create([
+            'parent_id' => fn() => Category::all()->whereNull('parent_id')->random()->id,
+            'type' => 'part'
         ]);
 
-        $catalogsIds = Catalog::all()->pluck('id');
-        $categories = Category::all()->whereNotNull('parent_id');
-
-        foreach($categories as $category) {
-            $category->catalogs()->syncWithoutDetaching($catalogsIds);
-        }
     }
 }
