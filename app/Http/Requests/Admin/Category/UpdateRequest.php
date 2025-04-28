@@ -17,14 +17,17 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category.title' => 'required|string|min:3|max:255|unique:categories,title,' . $this->route('category')->id,
+            'category.title' => 'required|string|min:3|max:255',
             'category.slug' => [
                 'required',
                 'string',
                 'min:3',
                 'max:255',
-                Rule::unique('categories')->where(fn($query) => $query->where('parent_id', $this->input('category.parent_id')))
-                    ->ignore($this->route('category')->id),
+                Rule::unique('categories', 'slug')  // Явно указываем таблицу и поле
+                ->where(function ($query) {
+                    return $query->where('parent_id', $this->input('category.parent_id'));
+                })
+                    ->ignore($this->route('category')),
             ],
             'category.parent_id' => 'nullable|integer|exists:categories,id',
             'category.type' => [

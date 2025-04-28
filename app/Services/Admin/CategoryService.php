@@ -28,7 +28,7 @@ class CategoryService
         try {
             DB::beginTransaction();
             $category->update($data['category']);
-            $category->metatags()->update($data['meta']);
+            $category->metatags()->updateOrCreate($data['meta']);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();

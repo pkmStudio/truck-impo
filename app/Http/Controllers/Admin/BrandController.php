@@ -27,6 +27,7 @@ class BrandController extends Controller
     {
         $data = $request->validated();
         Brand::create($data);
+        session()->put('success', 'Бренд успешно добавлен!');
         return redirect()->route('admin.brands.create');
     }
 

@@ -21,6 +21,8 @@ class CategoryResource extends JsonResource
             'content' => $this->content,
             'image_path' => $this->image_url,
             'slug' => $this->slug,
+            'metatags' => $this->metatags,
+            'childs' => $this->whenLoaded('childs'),
         ];
     }
 }
