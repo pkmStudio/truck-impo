@@ -15,8 +15,7 @@ class BrandController extends Controller
     public function index(Request $request)
     {
         $brands = Brand::all();
-//        return view('admin.brand.index', ['brands' => $brands]);
-        return \response()->json($brands);
+        return view('admin.brand.index', ['brands' => $brands]);
     }
 
     public function create(): View
