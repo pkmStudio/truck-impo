@@ -12,10 +12,11 @@ use Illuminate\Http\Request;
 
 class BrandController extends Controller
 {
-    public function index(Request $request): View
+    public function index(Request $request)
     {
         $brands = Brand::all();
-        return view('admin.brand.index', ['brands' => $brands]);
+//        return view('admin.brand.index', ['brands' => $brands]);
+        return \response()->json($brands);
     }
 
     public function create(): View
