@@ -1,0 +1,279 @@
+openapi: 3.0.0
+info:
+  title: Truck Import API
+  version: 1.0.0
+  description: API для работы с категориями, моделями и деталями
+
+servers:
+  - url: http://127.0.0.1:8000/api/v1/client
+    description: Local development server
+  - url: https://truck-import.laravel.cloud//api/v1/client
+    description: Test development server
+
+paths:
+  /categories/{brandSlug}:
+    get:
+      tags:
+        - Categories
+      summary: Получить информацию о бренде и его моделях
+      operationId: showBrand
+      parameters:
+        - name: brandSlug
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Уникальный идентификатор бренда
+      responses:
+        '200':
+          description: Успешный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrandResponse'
+        '404':
+          description: Бренд не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /categories/{brandSlug}/{modelSlug}/model:
+    get:
+      tags:
+        - Categories
+      summary: Получить информацию о модели и ее деталях
+      operationId: showModel
+      parameters:
+        - name: brandSlug
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Уникальный идентификатор бренда
+        - name: modelSlug
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Уникальный идентификатор модели
+      responses:
+        '200':
+          description: Успешный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelResponse'
+        '404':
+          description: Модель не найдена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /categories/{brandSlug}/{partSlug}/part:
+    get:
+      tags:
+        - Categories
+      summary: Получить информацию о детали и ее продуктах
+      operationId: showPart
+      parameters:
+        - name: brandSlug
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Уникальный идентификатор бренда
+        - name: partSlug
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Уникальный идентификатор детали
+      responses:
+        '200':
+          description: Успешный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartResponse'
+        '404':
+          description: Деталь не найдена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    # Основные схемы ответов
+    BrandResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: "sit"
+        description:
+          type: string
+          example: "Quia et aut autem in quidem iusto..."
+        content:
+          type: string
+          example: "<html>...</html>"
+        image_path:
+          type: string
+          format: uri
+          example: "https://via.placeholder.com/640x480.png/003333?text=consequatur"
+        slug:
+          type: string
+          example: "accusamus-dolorum-animi-est-dolores-cum-consequatur-architecto-unde"
+        metatags:
+          $ref: '#/components/schemas/Metatags'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChildCategory'
+
+    ModelResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 24
+        title:
+          type: string
+          example: "pariatur"
+        description:
+          type: string
+          example: "Itaque aut expedita illo id..."
+        content:
+          type: string
+          example: "<html>...</html>"
+        image_path:
+          type: string
+          format: uri
+          example: "https://via.placeholder.com/640x480.png/000099?text=eum"
+        slug:
+          type: string
+          example: "inventore-explicabo-rerum-excepturi-est-dolorum"
+        metatags:
+          nullable: true
+          type: object
+        children:
+          type: array
+          items: {}
+
+    PartResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 26
+        title:
+          type: string
+          example: "sint"
+        description:
+          type: string
+          example: "Est saepe necessitatibus dolor ab..."
+        content:
+          type: string
+          example: "<html>...</html>"
+        image_path:
+          type: string
+          format: uri
+          example: "https://via.placeholder.com/640x480.png/00cc99?text=earum"
+        slug:
+          type: string
+          example: "aut"
+        metatags:
+          $ref: '#/components/schemas/Metatags'
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+
+    # Вспомогательные схемы
+    ChildCategory:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "pariatur"
+        image_path:
+          type: string
+          format: uri
+          example: "https://via.placeholder.com/640x480.png/000099?text=eum"
+        slug:
+          type: string
+          example: "inventore-explicabo-rerum-excepturi-est-dolorum"
+
+    Metatags:
+      type: object
+      properties:
+        meta_h1:
+          type: string
+          example: "kljl;jl;"
+        meta_title:
+          type: string
+          example: "jl;kjl;k"
+        meta_description:
+          type: string
+          example: "jl;kjl;k"
+
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 36
+        brand_id:
+          type: integer
+          example: 5
+        article:
+          type: string
+          example: "80"
+        title:
+          type: string
+          example: "Miss"
+        description:
+          type: string
+          example: "Omnis necessitatibus ea repellendus quasi accusamus..."
+        price:
+          type: string
+          example: "Never."
+        delivery:
+          type: string
+          example: "Hatter."
+        quantity:
+          type: integer
+          example: 380
+        image_path:
+          type: string
+          format: uri
+          example: "https://via.placeholder.com/640x480.png/002244?text=dignissimos"
+        slug:
+          type: string
+          example: "quia-et-numquam-omnis-qui-architecto-aut"
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-04-23T14:27:13.000000Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2025-04-23T14:27:13.000000Z"
+        category_id:
+          type: integer
+          example: 26
+
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Resource not found"
+        code:
+          type: integer
+          example: 404
