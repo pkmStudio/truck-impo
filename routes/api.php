@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\Api\V1\Client\ProductController;
+
+use App\Http\Controllers\Api\V1\Client\BrandController;
 use Illuminate\Support\Facades\Route;
 
 //Route::get('/user', function (Request $request) {
@@ -8,5 +9,6 @@ use Illuminate\Support\Facades\Route;
 //})->middleware('auth:sanctum');
 
 Route::prefix('v1/client')->group(function () {
-    Route::get('/products', [ProductController::class, 'index']);
+    Route::apiResource('/brands', BrandController::class)->names('api.v1.client.brands')->except('show');
+
 });
