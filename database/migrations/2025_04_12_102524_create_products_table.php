@@ -16,12 +16,11 @@ return new class extends Migration
             $table->foreignId('brand_id')->index()->constrained('brands')->onDelete('cascade');
             $table->string('article')->unique()->index();
             $table->string('title');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->string('price');
             $table->string('delivery')->nullable();
             $table->integer('quantity');
             $table->string('image_path')->nullable();
-            $table->string('slug');
             $table->timestamps();
         });
     }
