@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1/client')->group(function () {
     Route::get('/categories/{brandSlug}', [CategoryController::class, 'showBrand'])->name('v1.client.categories.brand.show');
-    Route::get('/categories/{brandSlug}/{modelSlug}/model', [CategoryController::class, 'showModel'])->name('v1.client.categories.model.show');
-    Route::get('/categories/{brandSlug}/{partSlug}/part', [CategoryController::class, 'showPart'])->name('v1.client.categories.part.show');
+    Route::get('/categories/{brandSlug}/models/{modelSlug}', [CategoryController::class, 'showModel'])->name('v1.client.categories.model.show');
+    Route::get('/categories/{brandSlug}/parts/{partSlug}', [CategoryController::class, 'showPart'])->name('v1.client.categories.part.show');
 });
 // Как буд-то эти роуты логичнее?
 //* /categories/{brandSlug}/models

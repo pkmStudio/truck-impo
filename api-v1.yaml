@@ -38,7 +38,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-  /categories/{brandSlug}/{modelSlug}/model:
+  /categories/{brandSlug}/models/{modelSlug}:
     get:
       tags:
         - Categories
@@ -71,7 +71,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-  /categories/{brandSlug}/{partSlug}/part:
+  /categories/{brandSlug}/parts/{partSlug}:
     get:
       tags:
         - Categories
