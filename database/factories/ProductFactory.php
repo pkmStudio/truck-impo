@@ -28,7 +28,6 @@ class ProductFactory extends Factory
             'delivery' => fake()->realTextBetween(5, 10),
             'quantity' => fake()->numberBetween(0, 1000),
             'image_path' => fake()->imageUrl,
-            'slug' => fake()->unique()->slug,
         ];
     }
 }
