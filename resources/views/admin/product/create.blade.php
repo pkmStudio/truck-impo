@@ -218,8 +218,7 @@
     <script>
         // Показываем имя выбранного файла
         document.getElementById('product-image').addEventListener('change', function(e) {
-            var fileName = e.target.files[0]?.name || 'Выберите изображение';
-            e.target.nextElementSibling.innerText = fileName;
+            e.target.nextElementSibling.innerText = e.target.files[0]?.name || 'Выберите изображение';
         });
     </script>
 @endpush
