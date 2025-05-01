@@ -104,6 +104,33 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+  /products/{article}:
+    get:
+      tags:
+        - Products
+      summary: Получить информацию о продукте
+      operationId: show
+      parameters:
+        - name: article
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Уникальный идентификатор продукта
+      responses:
+        '200':
+          description: Успешный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          description: Деталь не найдена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
 components:
   schemas:
     # Основные схемы ответов
@@ -122,7 +149,7 @@ components:
         content:
           type: string
           example: "<html>...</html>"
-        image_path:
+        image_url:
           type: string
           format: uri
           example: "https://via.placeholder.com/640x480.png/003333?text=consequatur"
@@ -134,7 +161,7 @@ components:
         children:
           type: array
           items:
-            $ref: '#/components/schemas/ChildCategory'
+            $ref: '#/components/schemas/CategoryShort'
 
     ModelResponse:
       type: object
@@ -151,7 +178,7 @@ components:
         content:
           type: string
           example: "<html>...</html>"
-        image_path:
+        image_url:
           type: string
           format: uri
           example: "https://via.placeholder.com/640x480.png/000099?text=eum"
@@ -159,8 +186,7 @@ components:
           type: string
           example: "inventore-explicabo-rerum-excepturi-est-dolorum"
         metatags:
-          nullable: true
-          type: object
+          $ref: '#/components/schemas/Metatags'
         children:
           type: array
           items: {}
@@ -180,7 +206,7 @@ components:
         content:
           type: string
           example: "<html>...</html>"
-        image_path:
+        image_url:
           type: string
           format: uri
           example: "https://via.placeholder.com/640x480.png/00cc99?text=earum"
@@ -192,35 +218,7 @@ components:
         products:
           type: array
           items:
-            $ref: '#/components/schemas/Product'
-
-    # Вспомогательные схемы
-    ChildCategory:
-      type: object
-      properties:
-        title:
-          type: string
-          example: "pariatur"
-        image_path:
-          type: string
-          format: uri
-          example: "https://via.placeholder.com/640x480.png/000099?text=eum"
-        slug:
-          type: string
-          example: "inventore-explicabo-rerum-excepturi-est-dolorum"
-
-    Metatags:
-      type: object
-      properties:
-        meta_h1:
-          type: string
-          example: "kljl;jl;"
-        meta_title:
-          type: string
-          example: "jl;kjl;k"
-        meta_description:
-          type: string
-          example: "jl;kjl;k"
+            $ref: '#/components/schemas/ProductShort'
 
     Product:
       type: object
@@ -249,24 +247,61 @@ components:
         quantity:
           type: integer
           example: 380
-        image_path:
+        image_url:
           type: string
           format: uri
           example: "https://via.placeholder.com/640x480.png/002244?text=dignissimos"
-        slug:
-          type: string
-          example: "quia-et-numquam-omnis-qui-architecto-aut"
-        created_at:
-          type: string
-          format: date-time
-          example: "2025-04-23T14:27:13.000000Z"
-        updated_at:
-          type: string
-          format: date-time
-          example: "2025-04-23T14:27:13.000000Z"
         category_id:
           type: integer
           example: 26
+
+    # Вспомогательные схемы
+    CategoryShort:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "pariatur"
+        image_url:
+          type: string
+          format: uri
+          example: "https://via.placeholder.com/640x480.png/000099?text=eum"
+        slug:
+          type: string
+          example: "inventore-explicabo-rerum-excepturi-est-dolorum"
+
+    Metatags:
+      type: object
+      properties:
+        meta_h1:
+          type: string
+          example: "Заголовок"
+        meta_title:
+          type: string
+          example: "Покупайте только у нас!"
+        meta_description:
+          type: string
+          example: "Много покупок и 0 скидок!"
+
+    ProductShort:
+      type: object
+      properties:
+        article:
+          type: string
+          example: "80"
+        title:
+          type: string
+          example: "Miss"
+        price:
+          type: string
+          example: "Never."
+        quantity:
+          type: integer
+          example: 380
+        image_url:
+          type: string
+          format: uri
+          example: "https://via.placeholder.com/640x480.png/002244?text=dignissimos"
 
     ErrorResponse:
       type: object

@@ -6,7 +6,7 @@ use App\Http\Resources\Metatag\MetatagResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductResource extends JsonResource
+class ProductShortResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,16 +16,11 @@ class ProductResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'brand_id' => $this->brand_id,
             'article' => $this->article,
             'title' => $this->title,
-            'description' => $this->description,
             'price' => $this->price,
-            'delivery' => $this->delivery,
             'quantity' => $this->quantity,
             'image_url' => $this->image_url,
-            'metatags' => MetatagResource::make($this->metatags),
         ];
     }
 }

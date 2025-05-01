@@ -3,7 +3,7 @@
 namespace App\Http\Resources\Category;
 
 use App\Http\Resources\Metatag\MetatagResource;
-use App\Http\Resources\Product\ProductResource;
+use App\Http\Resources\Product\ProductShortResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -24,7 +24,7 @@ class CategoryPartResource extends JsonResource
             'image_path' => $this->image_url,
             'slug' => $this->slug,
             'metatags' => MetatagResource::make($this->metatags),
-            'products' => ProductResource::collection($this->whenLoaded('products')),
+            'products' => ProductShortResource::collection($this->whenLoaded('products')),
         ];
     }
 }
