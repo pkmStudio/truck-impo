@@ -3,16 +3,15 @@
 namespace App\Http\Resources\Category;
 
 use App\Http\Resources\Metatag\MetatagResource;
-use App\Http\Resources\Product\ProductResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryPartResource extends JsonResource
+class CategoryModelResource extends JsonResource
 {
+
     /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
+     * @param Request $request
+     * @return array
      */
     public function toArray(Request $request): array
     {
@@ -24,7 +23,7 @@ class CategoryPartResource extends JsonResource
             'image_path' => $this->image_url,
             'slug' => $this->slug,
             'metatags' => MetatagResource::make($this->metatags),
-            'products' => ProductResource::collection($this->whenLoaded('products')),
+            'parts' => CategoryShortResource::collection($this->whenLoaded('parts')),
         ];
     }
 }

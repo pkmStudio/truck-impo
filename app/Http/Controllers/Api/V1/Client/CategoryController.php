@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Category\CategoryModelResource;
 use App\Http\Resources\Category\CategoryPartResource;
 use App\Http\Resources\Category\CategoryResource;
 use App\Models\Category;
@@ -30,9 +31,9 @@ class CategoryController extends Controller
     public function showModel($brandSlug, $modelSlug): array
     {
         $category = Category::where('slug', $modelSlug)
-            ->with(['children' => function($query) { $query->where('type', 'part');}])
+            ->with('parts')
             ->firstOrFail();
-        return CategoryResource::make($category)->resolve();
+        return CategoryModelResource::make($category)->resolve();
     }
 
     /**

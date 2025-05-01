@@ -34,7 +34,7 @@ class CategoryController extends Controller
 
     public function edit(Category $category): View
     {
-        $categories = Category::all()->sortBy('title');
+        $categories = Category::all()->sortBy(['type', 'title']);
         return view('admin.category.edit', ['category' => $category, 'categories' => $categories]);
     }
 
