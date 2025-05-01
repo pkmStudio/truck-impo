@@ -31,7 +31,7 @@
                         <div class="col-md-4">
                             <div class="text-center mb-3">
                                 @if($category->image_path)
-                                    <img src="{{ Storage::url($category->image_path) }}"
+                                    <img src="{{ $category->image_url }}"
                                          class="img-thumbnail mb-3"
                                          alt="Изображение категории"
                                          style="max-height: 200px; cursor: pointer;"
@@ -89,7 +89,7 @@
                                                 @if($cat->id !== $category->id) {{-- Исключаем текущую категорию --}}
                                                 <option value="{{ $cat->id }}"
                                                     {{ old('category.parent_id', $category->parent_id) == $cat->id ? 'selected' : '' }}>
-                                                    {{ str_repeat('— ', $cat->depth) }}{{ $cat->title }}
+                                                    {{ $cat->title }} - {{ $cat->type }}
                                                 </option>
                                                 @endif
                                             @endforeach

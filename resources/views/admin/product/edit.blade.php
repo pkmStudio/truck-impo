@@ -30,7 +30,7 @@
                         <div class="col-md-4">
                             <div class="text-center mb-3">
                                 @if($product->image_path)
-                                    <img src="{{ Storage::url($product->image_path) }}"
+                                    <img src="{{ $product->image_url }}"
                                          class="img-thumbnail mb-3"
                                          alt="Изображение продукта"
                                          style="max-height: 200px; cursor: pointer;"

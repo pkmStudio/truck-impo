@@ -25,6 +25,11 @@ class Category extends Model
     {
         return $this->hasMany(Category::class, 'parent_id');
     }
+    public function parts()
+    {
+        return $this->hasMany(Category::class, 'parent_id', 'parent_id')
+        ->where('type', 'part');
+    }
 
     public function products(): HasMany
     {
@@ -36,8 +41,10 @@ class Category extends Model
         return $this->morphOne(Metatag::class, 'metatagable');
     }
 
-    public function getImageUrlAttribute(): string
+    public function getImageUrlAttribute()
     {
-        return $this->image_path ?? Storage::disk('public')->url($this->image_path);
+        return $this->image_path
+            ? Storage::disk('public')->url($this->image_path)
+            : null;
     }
 }

@@ -34,8 +34,11 @@ class Product extends Model
         return $this->morphOne(Metatag::class, 'metatagable');
     }
 
-    public function getImageUrlAttribute(): string
+    public function getImageUrlAttribute()
     {
-        return $this->image_path ?? Storage::disk('public')->url($this->image_path);
+        return $this->image_path
+            ? Storage::disk('public')->url($this->image_path)
+            : null;
     }
+
 }
