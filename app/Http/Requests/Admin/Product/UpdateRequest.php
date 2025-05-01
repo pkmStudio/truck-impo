@@ -5,11 +5,10 @@ namespace App\Http\Requests\Admin\Product;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
-
-class StoreRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -19,7 +18,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'product.brand_id' =>'required|integer|exists:brands,id',
-            'product.article' =>'required|string|unique:products,article',
+            'product.article' =>'required|string|unique:products,article,' . $this->route('product')->id,
             'product.title' =>'required|string|max:255',
             'product.description' =>'nullable|string',
             'product.price' =>'required|string|max:255',
@@ -34,16 +33,26 @@ class StoreRequest extends FormRequest
         ];
     }
 
-    public function passedValidation(): void
+    protected function passedValidation(): void
     {
+        // Получаем старый путь к изображению, если он есть
+        $oldImagePath = $this->route('product')->image_path ?? null;
+
+        // Загружаем новое изображение, если оно есть
+        $newImagePath = $this->hasFile('product.image') ?
+            Storage::disk('public')->put('/images', $this->file('product.image')) :
+            null;
+
+        // Удаляем старое изображение, если новое изображение загружено
+        if ($newImagePath && $oldImagePath) {
+            Storage::disk('public')->delete($oldImagePath);
+        }
+
         $this->merge([
             'product' => [
                 ...$this->validated()['product'],
-                'image_path' => $this->hasFile('product.image') ?
-                    Storage::disk('public')->put('/images', $this->file('product.image')) :
-                    null,
-            ],
-
+                'image_path' => $newImagePath ?? $oldImagePath,
+            ]
         ]);
     }
 }
