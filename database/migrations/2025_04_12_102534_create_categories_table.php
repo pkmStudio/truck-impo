@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('parent_id')->nullable()->index()->constrained('categories')->onDelete('cascade');
             $table->string('title')->nullable();
             $table->text('description')->nullable();
-            $table->text('content')->nullable();
+            $table->json('content')->nullable();
             $table->string('image_path')->nullable();
             $table->string('slug')->index();
             $table->enum('type', ['manufacturer', 'model', 'part'])->index()->nullable();

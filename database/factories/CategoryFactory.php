@@ -19,7 +19,7 @@ class CategoryFactory extends Factory
         return [
             'title' => fake()->unique()->word(),
             'description' => fake()->text,
-            'content' => fake()->randomHtml(2,5),
+            'content' => fake()->json,
             'image_path' => fake()->imageUrl,
             'slug' => fake()->unique()->slug,
         ];
