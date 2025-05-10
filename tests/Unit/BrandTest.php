@@ -14,7 +14,7 @@ class BrandTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function test_brand_has_many_products()
+    public function testBrandHasManyProducts()
     {
         $brand = Brand::factory()->create();
         $category = Category::factory()->create();
