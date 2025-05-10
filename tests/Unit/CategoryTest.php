@@ -62,10 +62,9 @@ class CategoryTest extends TestCase
 
     public function testCategoryHasManyProducts()
     {
-        $brand = Brand::factory()->create();
         $parentCategory = Category::factory()->create();
-        $product1 = Product::factory()->create(['category_id' => $parentCategory->id, 'brand_id' => $brand->id]);
-        $product2 = Product::factory()->create(['category_id' => $parentCategory->id, 'brand_id' => $brand->id]);
+        $product1 = Product::factory()->create(['category_id' => $parentCategory->id]);
+        $product2 = Product::factory()->create(['category_id' => $parentCategory->id]);
 
         $this->assertCount(2, $parentCategory->products);
         $this->assertInstanceOf(Product::class, $parentCategory->products->first());

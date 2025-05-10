@@ -20,8 +20,8 @@ class ProductFactory extends Factory
     {
         return [
             'article' => fake()->unique()->randomNumber(),
-            'brand_id' => Brand::all()->random()->id,
-            'category_id' => Category::all()->random()->id,
+            'brand_id' => Brand::factory()->create(),
+            'category_id' => Category::factory()->create(),
             'title' => fake()->title,
             'description' => fake()->text,
             'price' => fake()->realTextBetween(5, 10),
