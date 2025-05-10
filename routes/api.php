@@ -15,7 +15,3 @@ Route::prefix('v1/client')->group(function () {
     Route::get('/categories/{brandSlug}/parts/{partSlug}', [CategoryController::class, 'showPart'])->name('v1.client.categories.part.show');
     Route::get('/products/{article}', [ProductController::class, 'show'])->name('v1.client.products.show');
 });
-// Как буд-то эти роуты логичнее?
-//* /categories/{brandSlug}/models
-//* /categories/{brandSlug}/{modelSlug}/parts
-//* /categories/{brandSlug}/{partSlug}/products

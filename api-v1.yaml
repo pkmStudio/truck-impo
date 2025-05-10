@@ -123,7 +123,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Product'
+                $ref: '#/components/schemas/ProductResponse'
         '404':
           description: Деталь не найдена
           content:
@@ -220,40 +220,56 @@ components:
           items:
             $ref: '#/components/schemas/ProductShort'
 
-    Product:
+    ProductResponse:
       type: object
       properties:
         id:
           type: integer
-          example: 36
+          example: 42
         brand_id:
           type: integer
-          example: 5
+          example: 3
         article:
           type: string
-          example: "80"
+          example: "235364578565435"
         title:
           type: string
-          example: "Miss"
+          example: "Тормоза без тормозов"
         description:
           type: string
-          example: "Omnis necessitatibus ea repellendus quasi accusamus..."
+          nullable: true
+          example: null
         price:
           type: string
-          example: "Never."
+          example: "123 копейки"
         delivery:
           type: string
-          example: "Hatter."
+          nullable: true
+          example: null
         quantity:
           type: integer
-          example: 380
+          example: 4
         image_url:
           type: string
           format: uri
-          example: "https://via.placeholder.com/640x480.png/002244?text=dignissimos"
+          example: "http://127.0.0.1:8000/storage/images/HSuKebOvGLORjSLZvVUMJQetx0lheeKQk5mgdzs7.png"
         category_id:
           type: integer
           example: 26
+        metatags:
+          $ref: "#/components/schemas/Metatags" # Ссылка на уже определённый объект
+        characteristics:
+          type: array
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+                example: "1"
+              description:
+                type: string
+                example: "1"
+
 
     # Вспомогательные схемы
     CategoryShort:
