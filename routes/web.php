@@ -4,22 +4,23 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\AdminAuthController;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Middleware\CustomAuthenticateMiddleware;
+use App\Http\Middleware\IsAdminMiddleware;
+use App\Http\Middleware\RedirectIfAuthenticatedMiddleware;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/admin', function () {
-    return view('admin.main.index');
-})->name('admin.index');
+// Доступ в админку — только для авторизованного админа
+Route::middleware([CustomAuthenticateMiddleware::class, IsAdminMiddleware::class])->group(function () {
+    Route::get('/admin', function () {return view('admin.main.index');})->name('admin.index');
 
-Route::group(['prefix' => 'admin'], function () {
-    Route::resource('/brands', BrandController::class)->names('admin.brands')->except('show');
-    Route::resource('/categories', CategoryController::class)->names('admin.categories');
-    Route::resource('/products', ProductController::class)->names('admin.products');
+    Route::resource('/admin/brands', BrandController::class)->names('admin.brands')->except('show');
+    Route::resource('/admin/categories', CategoryController::class)->names('admin.categories')->except('show');
+    Route::resource('/admin/products', ProductController::class)->names('admin.products')->except('show');
 });
 
-Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
-Route::post('/admin/login', [AdminAuthController::class, 'login']);
+// Вход и выход (без ограничений)
+Route::middleware([RedirectIfAuthenticatedMiddleware::class])->group(function () {
+    Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
+    Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.post');
+});
 Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
-
-
-Route::get('/home', [App\Http\Controllers\AdminAuthController::class, 'index'])->name('home');

@@ -14,6 +14,7 @@ class AdminAuthController extends Controller
 
     public function login(Request $request)
     {
+
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
@@ -31,12 +32,12 @@ class AdminAuthController extends Controller
             return back()->withErrors(['error' => 'Доступ только для админов']);
         }
 
-        return redirect()->route('admin.index'); // Перенаправляем в админку
+        return redirect()->route('admin.index');
     }
 
     public function logout()
     {
         Auth::logout();
-        return redirect('/admin/login');
+        return redirect()->route('admin.login');
     }
 }
