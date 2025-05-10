@@ -2,12 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\Brand;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Brand>
  */
 class BrandFactory extends Factory
 {
@@ -16,6 +15,7 @@ class BrandFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Brand::class;
     public function definition(): array
     {
         return [
