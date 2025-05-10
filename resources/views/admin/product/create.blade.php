@@ -42,7 +42,8 @@
                                         id="product-brand_id" name="product[brand_id]" required>
                                     <option value="">Выберите бренд</option>
                                     @foreach($brands as $brand)
-                                        <option value="{{ $brand->id }}" {{ old('product.brand_id') == $brand->id ? 'selected' : '' }}>
+                                        <option
+                                            value="{{ $brand->id }}" {{ old('product.brand_id') == $brand->id ? 'selected' : '' }}>
                                             {{ $brand->title }}
                                         </option>
                                     @endforeach
@@ -60,7 +61,8 @@
                                         id="product-category_id" name="product[category_id]" required>
                                     <option value="">Выберите категорию</option>
                                     @foreach($categories as $category)
-                                        <option value="{{ $category->id }}" {{ old('product.category_id') == $category->id ? 'selected' : '' }}>
+                                        <option
+                                            value="{{ $category->id }}" {{ old('product.category_id') == $category->id ? 'selected' : '' }}>
                                             {{ $category->parent->title }} - {{ $category->title }}
                                         </option>
                                     @endforeach
@@ -124,7 +126,8 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="product-quantity">Количество <span class="text-danger">*</span></label>
-                                <input type="number" class="form-control @error('product.quantity') is-invalid @enderror"
+                                <input type="number"
+                                       class="form-control @error('product.quantity') is-invalid @enderror"
                                        id="product-quantity" name="product[quantity]"
                                        value="{{ old('product.quantity', 0) }}" required min="0">
                                 @error('product.quantity')
@@ -158,21 +161,27 @@
                         @enderror
                         <small class="form-text text-muted">Допустимые форматы: jpeg, png, jpg, gif, svg, webp</small>
                     </div>
+
                     <hr>
                     <div class="form-group">
                         <label>Характеристики товара</label>
                         <div id="characteristics-repeater">
                             @foreach(old('characteristics', []) as $index => $char)
                                 <div class="characteristic-item d-flex mb-2">
-                                    <input type="text" name="characteristics[{{ $index }}][title]" value="{{ old("characteristics.$index.title") }}" placeholder="Название" class="form-control">
-                                    <input type="text" name="characteristics[{{ $index }}][description]" value="{{ old("characteristics.$index.description") }}" placeholder="Описание" class="form-control ml-2">
+                                    <input type="text" name="characteristics[{{ $index }}][title]"
+                                           value="{{ old("characteristics.$index.title") }}" placeholder="Название"
+                                           class="form-control">
+                                    <input type="text" name="characteristics[{{ $index }}][description]"
+                                           value="{{ old("characteristics.$index.description") }}"
+                                           placeholder="Описание" class="form-control ml-2">
                                     <button type="button" class="btn btn-danger ml-2 remove-characteristic">×</button>
                                 </div>
                             @endforeach
                         </div>
-                        <button type="button" id="add-characteristic" class="btn btn-success mt-2">Добавить характеристику</button>
+                        <button type="button" id="add-characteristic" class="btn btn-success mt-2">Добавить
+                            характеристику
+                        </button>
                     </div>
-
 
                     <hr>
                     <h5 class="mb-3"><i class="fas fa-search"></i> SEO Настройки</h5>
@@ -228,6 +237,7 @@
         </div>
     </div>
     <script>
+        // Добавляет и Удаляет поля Характеристик
         document.addEventListener('DOMContentLoaded', function () {
             let repeater = document.getElementById('characteristics-repeater');
             let addBtn = document.getElementById('add-characteristic');
@@ -242,25 +252,29 @@
                 });
             }
 
-            addBtn.addEventListener('click', function () {
-                let index = document.querySelectorAll('.characteristic-item').length;
-                let newField = document.createElement('div');
+            function addCharacteristic() {
+                const index = repeater.children.length;
+                const newField = document.createElement('div');
                 newField.classList.add('characteristic-item', 'd-flex', 'mb-2');
-                newField.innerHTML = `
-            <input type="text" name="characteristics[${index}][title]" placeholder="Название" class="form-control">
-            <input type="text" name="characteristics[${index}][description]" placeholder="Описание" class="form-control ml-2">
-            <button type="button" class="btn btn-danger ml-2 remove-characteristic">×</button>
-        `;
-                repeater.appendChild(newField);
-                updateIndexes();
-            });
+                newField.dataset.index = index;
 
-            repeater.addEventListener('click', function (event) {
+                newField.innerHTML = `
+                    <input type="text" name="characteristics[${index}][title]" placeholder="Название" class="form-control">
+                    <input type="text" name="characteristics[${index}][description]" placeholder="Описание" class="form-control ml-2">
+                    <button type="button" class="btn btn-danger ml-2 remove-characteristic">×</button>
+                `;
+                repeater.appendChild(newField);
+            }
+
+            function removeCharacteristic(event) {
                 if (event.target.classList.contains('remove-characteristic')) {
                     event.target.closest('.characteristic-item').remove();
                     updateIndexes();
                 }
-            });
+            }
+
+            addBtn.addEventListener('click', addCharacteristic);
+            repeater.addEventListener('click', removeCharacteristic);
         });
     </script>
 

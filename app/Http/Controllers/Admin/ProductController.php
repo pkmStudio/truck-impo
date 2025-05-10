@@ -41,7 +41,6 @@ class ProductController extends Controller
     public function store(StoreRequest $request): RedirectResponse
     {
         $data = $request->except('product.image');
-
         ProductService::store($data);
         return redirect()->route('admin.products.create');
     }

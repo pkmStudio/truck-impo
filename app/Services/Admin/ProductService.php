@@ -14,8 +14,10 @@ class ProductService
             $product = Product::create($data['product']);
             $product->metatags()->create($data['meta']);
 
-            foreach ($data['characteristics'] as $characteristic) {
-                $product->characteristics()->create($characteristic);
+            if (isset($data['characteristics'])) {
+                foreach ($data['characteristics'] as $characteristic) {
+                    $product->characteristics()->create($characteristic);
+                }
             }
 
             session()->put('success', 'Товар успешно добавлен!');
@@ -34,6 +36,13 @@ class ProductService
             DB::beginTransaction();
             $product->update($data['product']);
             $product->metatags()->updateOrCreate($data['meta']);
+
+            if (isset($data['characteristics'])) {
+                foreach ($data['characteristics'] as $characteristic) {
+                    $product->characteristics()->updateOrCreate($characteristic);
+                }
+            }
+
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
