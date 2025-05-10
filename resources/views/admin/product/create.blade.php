@@ -158,6 +158,21 @@
                         @enderror
                         <small class="form-text text-muted">Допустимые форматы: jpeg, png, jpg, gif, svg, webp</small>
                     </div>
+                    <hr>
+                    <div class="form-group">
+                        <label>Характеристики товара</label>
+                        <div id="characteristics-repeater">
+                            @foreach(old('characteristics', []) as $index => $char)
+                                <div class="characteristic-item d-flex mb-2">
+                                    <input type="text" name="characteristics[{{ $index }}][title]" value="{{ old("characteristics.$index.title") }}" placeholder="Название" class="form-control">
+                                    <input type="text" name="characteristics[{{ $index }}][description]" value="{{ old("characteristics.$index.description") }}" placeholder="Описание" class="form-control ml-2">
+                                    <button type="button" class="btn btn-danger ml-2 remove-characteristic">×</button>
+                                </div>
+                            @endforeach
+                        </div>
+                        <button type="button" id="add-characteristic" class="btn btn-success mt-2">Добавить характеристику</button>
+                    </div>
+
 
                     <hr>
                     <h5 class="mb-3"><i class="fas fa-search"></i> SEO Настройки</h5>
@@ -212,13 +227,43 @@
             </div>
         </div>
     </div>
-@endsection
-
-@push('scripts')
     <script>
-        // Показываем имя выбранного файла
-        document.getElementById('product-image').addEventListener('change', function(e) {
-            e.target.nextElementSibling.innerText = e.target.files[0]?.name || 'Выберите изображение';
+        document.addEventListener('DOMContentLoaded', function () {
+            let repeater = document.getElementById('characteristics-repeater');
+            let addBtn = document.getElementById('add-characteristic');
+
+            function updateIndexes() {
+                document.querySelectorAll('.characteristic-item').forEach((item, index) => {
+                    item.querySelectorAll('input').forEach(input => {
+                        let name = input.getAttribute('name');
+                        name = name.replace(/\d+/, index); // Обновляем индекс в имени
+                        input.setAttribute('name', name);
+                    });
+                });
+            }
+
+            addBtn.addEventListener('click', function () {
+                let index = document.querySelectorAll('.characteristic-item').length;
+                let newField = document.createElement('div');
+                newField.classList.add('characteristic-item', 'd-flex', 'mb-2');
+                newField.innerHTML = `
+            <input type="text" name="characteristics[${index}][title]" placeholder="Название" class="form-control">
+            <input type="text" name="characteristics[${index}][description]" placeholder="Описание" class="form-control ml-2">
+            <button type="button" class="btn btn-danger ml-2 remove-characteristic">×</button>
+        `;
+                repeater.appendChild(newField);
+                updateIndexes();
+            });
+
+            repeater.addEventListener('click', function (event) {
+                if (event.target.classList.contains('remove-characteristic')) {
+                    event.target.closest('.characteristic-item').remove();
+                    updateIndexes();
+                }
+            });
         });
     </script>
-@endpush
+
+@endsection
+
+

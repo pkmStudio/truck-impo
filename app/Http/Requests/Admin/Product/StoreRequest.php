@@ -31,6 +31,8 @@ class StoreRequest extends FormRequest
             'meta.meta_h1' => 'nullable|string|max:255',
             'meta.meta_title' => 'nullable|string|max:255',
             'meta.meta_description' => 'nullable|string|max:500',
+
+            'characteristics' => 'nullable|array',
         ];
     }
 

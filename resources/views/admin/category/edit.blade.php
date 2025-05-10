@@ -211,13 +211,3 @@
     @endif
 @endsection
 
-@push('scripts')
-    <script>
-        // Показываем имя выбранного файла
-        document.querySelector('.custom-file-input').addEventListener('change', function(e) {
-            var fileName = document.getElementById("category-image").files[0].name;
-            var nextSibling = e.target.nextElementSibling;
-            nextSibling.innerText = fileName;
-        });
-    </script>
-@endpush

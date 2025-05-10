@@ -13,6 +13,11 @@ class ProductService
             DB::beginTransaction();
             $product = Product::create($data['product']);
             $product->metatags()->create($data['meta']);
+
+            foreach ($data['characteristics'] as $characteristic) {
+                $product->characteristics()->create($characteristic);
+            }
+
             session()->put('success', 'Товар успешно добавлен!');
             DB::commit();
         } catch (\Exception $e) {
