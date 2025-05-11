@@ -6,7 +6,6 @@ use App\Http\Requests\Admin\Category\StoreRequest;
 use App\Models\Category;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
 class StoreRequestTest extends TestCase
@@ -62,18 +61,15 @@ class StoreRequestTest extends TestCase
         $parent = Category::factory()->create();
         Category::factory()->create(['slug' => 'test-slug', 'parent_id' => $parent->id]);
 
-        $rule = Rule::unique('categories', 'slug')
-            ->where('parent_id', $parent->id);
+        $request = new StoreRequest();
 
-        $this->assertTrue(validator(
-            ['slug' => 'test-slug'],
-            ['slug' => $rule]
-        )->fails());
+        $request->merge(['category.slug' => 'test-slug', 'category.parent_id' => $parent->id]);
+        $validator = validator($request->all(), ['category.slug' => $request->rules()['category.slug']]);
+        $this->assertTrue($validator->fails());
 
-        $this->assertFalse(validator(
-            ['slug' => 'new'],
-            ['slug' => $rule]
-        )->fails());
+        $request->merge(['category.slug' => 'test-slug-unique', 'category.parent_id' => $parent->id]);
+        $validator = validator($request->all(), ['category.slug' => $request->rules()['category.slug']]);
+        $this->assertFalse($validator->fails());
     }
 
     public function testValidCategoryDataPassesValidation()
