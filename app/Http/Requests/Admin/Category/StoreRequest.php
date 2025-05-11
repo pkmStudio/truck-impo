@@ -18,7 +18,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category.title' => 'required|string|min:3|max:255|unique:categories,title',
+            'category.title' => 'required|string|min:3|max:255',
             'category.slug' => [
                 'required',
                 'string',
@@ -27,8 +27,7 @@ class StoreRequest extends FormRequest
                 Rule::unique('categories', 'slug')  // Явно указываем таблицу и поле
                 ->where(function ($query) {
                     return $query->where('parent_id', $this->input('category.parent_id'));
-                })
-                    ->ignore($this->route('category')),
+                }),
             ],
             'category.parent_id' => 'nullable|integer|exists:categories,id',
             'category.type' => [
