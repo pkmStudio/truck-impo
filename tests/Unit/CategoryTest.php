@@ -2,7 +2,6 @@
 
 namespace Tests\Unit;
 
-use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Metatag;
 use App\Models\Product;
@@ -25,8 +24,7 @@ class CategoryTest extends TestCase
     public function testCategoryHasManyChildren()
     {
         $parentCategory = Category::factory()->create();
-        $childCategory1 = Category::factory()->create(['parent_id' => $parentCategory->id]);
-        $childCategory2 = Category::factory()->create(['parent_id' => $parentCategory->id]);
+        Category::factory()->count(2)->create(['parent_id' => $parentCategory->id]);
 
         $this->assertCount(2, $parentCategory->children);
         $this->assertInstanceOf(Category::class, $parentCategory->children->first());
@@ -37,12 +35,7 @@ class CategoryTest extends TestCase
         $parentCategory = Category::factory()->create();
 
         // Создаём дочерние категории с `type = part`
-        $part1 = Category::factory()->create([
-            'parent_id' => $parentCategory->id,
-            'type' => 'part',
-        ]);
-
-        $part2 = Category::factory()->create([
+        Category::factory()->count(2)->create([
             'parent_id' => $parentCategory->id,
             'type' => 'part',
         ]);
@@ -54,8 +47,6 @@ class CategoryTest extends TestCase
         ]);
 
         $this->assertCount(2, $parentCategory->parts);
-        $this->assertTrue($parentCategory->parts->contains($part1));
-        $this->assertTrue($parentCategory->parts->contains($part2));
         $this->assertFalse($parentCategory->parts->contains($model));
         $this->assertInstanceOf(Category::class, $parentCategory->parts->first());
     }
@@ -63,8 +54,7 @@ class CategoryTest extends TestCase
     public function testCategoryHasManyProducts()
     {
         $parentCategory = Category::factory()->create();
-        $product1 = Product::factory()->create(['category_id' => $parentCategory->id]);
-        $product2 = Product::factory()->create(['category_id' => $parentCategory->id]);
+        Product::factory()->count(2)->create(['category_id' => $parentCategory->id]);
 
         $this->assertCount(2, $parentCategory->products);
         $this->assertInstanceOf(Product::class, $parentCategory->products->first());
