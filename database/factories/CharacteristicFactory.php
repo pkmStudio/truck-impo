@@ -20,7 +20,7 @@ class CharacteristicFactory extends Factory
         return [
             'title' => fake()->title,
             'description' => fake()->text,
-            'product_id' => Product::all()->random()->first()->id,
+            'product_id' => Product::factory()->create(),
         ];
     }
 }

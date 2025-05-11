@@ -2,8 +2,6 @@
 
 namespace Tests\Unit;
 
-use App\Models\Brand;
-use App\Models\Category;
 use App\Models\Characteristic;
 use App\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;

@@ -15,7 +15,7 @@ class CharacteristicSeeder extends Seeder
      */
     public function run(): void
     {
-        Characteristic::factory()->count(40)->create([
+        Characteristic::factory()->count(80)->create([
             'product_id' => fn() => Product::all()->random()->id,
         ]);
     }
