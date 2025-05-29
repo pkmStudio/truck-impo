@@ -31,8 +31,10 @@ class CategoryController extends Controller
     public function showModel($brandSlug, $modelSlug): array
     {
         $category = Category::where('slug', $modelSlug)
-            ->with('parts')
+            ->whereHas('parent', function ($query) use ($brandSlug) {$query->where('slug', $brandSlug);})
+            ->with('parent.parts')
             ->firstOrFail();
+        $category->setRelation('parts', $category->parent->parts);
         return CategoryModelResource::make($category)->resolve();
     }
 
