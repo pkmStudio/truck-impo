@@ -10,7 +10,7 @@ class ProductController extends Controller
 {
     public function show($article): array
     {
-        $product = Product::where('article', $article)->first();
+        $product = Product::where('article', $article)->firstOrFail();
         return ProductResource::make($product)->resolve();
     }
 }
